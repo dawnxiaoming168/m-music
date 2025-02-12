@@ -1,0 +1,66 @@
+<!--
+ * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @Date: 2024-12-07 15:55:35
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2024-12-10 22:15:15
+ * @FilePath: \cursor\index.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>小明音乐播放器</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="输入歌曲名称...">
+            <button id="searchBtn">搜索</button>
+        </div>
+
+        <div class="lyrics hidden" id="lyrics">
+            <p>还没有播放音乐...</p>
+        </div>
+
+        <div class="player hidden" id="player">
+            <img src="https://via.placeholder.com/120" alt="封面" class="cover" id="cover">
+            <div class="player-info">
+                <div class="song-info">
+                    <h2 id="songTitle">歌曲名称</h2>
+                    <p id="artist">歌手名称</p>
+                </div>
+                <div class="controls">
+                    <div class="control-buttons">
+                        <button id="prevBtn" class="control-btn">⏮️</button>
+                        <button id="playBtn" class="control-btn play-btn">▶️</button>
+                        <button id="nextBtn" class="control-btn">⏭️</button>
+                    </div>
+                    <div class="control-settings">
+                        <div class="volume-control">
+                            <button id="muteBtn" class="control-btn volume-btn">🔊</button>
+                            <div class="volume-slider-container">
+                                <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="100">
+                            </div>
+                        </div>
+                        <button id="speedBtn" class="speed-btn">1.00x</button>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <span class="time current-time">00:00</span>
+                    <div class="progress" id="progressContainer">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <span class="time total-time">00:00</span>
+                </div>
+            </div>
+        </div>
+
+        <ul class="search-results" id="searchResults"></ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
