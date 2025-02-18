@@ -680,4 +680,148 @@ body {
         width: 120px;
     }
 }
+
+/* 更多选项按钮样式 */
+.more-options {
+    position: relative;
+    margin-left: 10px;
+}
+
+.more-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: all 0.3s;
+}
+
+.more-btn:hover {
+    opacity: 0.8;
+}
+
+/* 更多选项菜单样式 */
+.more-menu {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 8px;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    transition: all 0.3s;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.menu-item span {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+}
+
+.download-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: all 0.3s;
+}
+
+.download-btn:hover {
+    transform: scale(1.1);
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 768px) {
+    .more-menu {
+        width: 180px;
+    }
+}
+
+/* 播放速度下拉框样式 */
+.speed-select {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    outline: none;
+}
+
+.speed-select:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.speed-select option {
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+}
+
+/* 下载提示样式 */
+.toast-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(29, 185, 84, 0.9);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    z-index: 1000;
+    animation: fadeInOut 3s ease forwards;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, 20px); }
+    10% { opacity: 1; transform: translate(-50%, 0); }
+    90% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, -20px); }
+}
+
+/* 添加错误提示样式 */
+.toast-message.error {
+    background: rgba(255, 59, 48, 0.9);
+}
+
+/* 音质选择下拉框样式 */
+.quality-select {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    outline: none;
+}
+
+.quality-select:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.quality-select option {
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+}
  
