@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const speedBtn = document.getElementById('speedBtn');
     const volumeSlider = document.getElementById('volumeSlider');
     const muteBtn = document.getElementById('muteBtn');
+    const moreBtn = document.getElementById('moreBtn');
+    const moreMenu = document.querySelector('.more-menu');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const speedSelect = document.getElementById('speedSelect');
+    const qualitySelect = document.getElementById('qualitySelect');
 
     // 初始化变量
     let audio = new Audio();
@@ -27,8 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSongIndex = null;
     let songsList = [];
     let currentKeyword = '';
-    const speedLevels = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
-    let currentSpeedIndex = 2; // 默认 1.0x
     let lastVolume = 1;
 
     // 格式化时间的函数
@@ -81,7 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 播放音乐
     async function playMusic(index) {
         try {
-            const response = await fetch(`https://www.hhlqilongzhu.cn/api/dg_wyymusic.php?gm=${encodeURIComponent(currentKeyword)}&n=${index}&type=json&num=60&br=2`);
+            // 获取当前选择的音质
+            const quality = qualitySelect.value;
+            
+            const response = await fetch(`https://www.hhlqilongzhu.cn/api/dg_wyymusic.php?gm=${encodeURIComponent(currentKeyword)}&n=${index}&type=json&num=60&br=${quality}`);
             const data = await response.json();
 
             if (data.code === 200) {
@@ -147,14 +153,13 @@ document.addEventListener('DOMContentLoaded', () => {
             totalTime.textContent = formatTime(audio.duration);
         });
 
-        // 重置播放速度
-        currentSpeedIndex = 2;
-        audio.playbackRate = 1.0;
-        speedBtn.textContent = '1.00x';
-
         // 初始化音量
         audio.volume = volumeSlider.value / 100;
         updateVolumeIcon(audio.volume);
+
+        // 重置播放速度为 1.0
+        speedSelect.value = "1.0";
+        audio.playbackRate = 1.0;
     }
 
     // 解析歌词
@@ -340,24 +345,6 @@ document.addEventListener('DOMContentLoaded', () => {
         lyricsElement.classList.add('hidden');
     });
 
-    // 倍速控制
-    speedBtn.addEventListener('click', () => {
-        currentSpeedIndex = (currentSpeedIndex + 1) % speedLevels.length;
-        const newSpeed = speedLevels[currentSpeedIndex];
-        
-        // 更新音频播放速度
-        audio.playbackRate = newSpeed;
-        
-        // 更新按钮显示
-        speedBtn.textContent = `${newSpeed.toFixed(2)}x`;
-        
-        // 添加视觉反馈
-        speedBtn.style.transform = 'scale(1.1)';
-        setTimeout(() => {
-            speedBtn.style.transform = 'scale(1)';
-        }, 200);
-    });
-
     // 音量滑块事件
     volumeSlider.addEventListener('input', (e) => {
         const volume = e.target.value / 100;
@@ -391,4 +378,123 @@ document.addEventListener('DOMContentLoaded', () => {
             muteBtn.textContent = '🔊';
         }
     }
+
+    // 更多选项菜单显示/隐藏
+    moreBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        moreMenu.classList.toggle('hidden');
+    });
+
+    // 点击其他地方关闭菜单
+    document.addEventListener('click', (e) => {
+        if (!moreMenu.contains(e.target) && !moreBtn.contains(e.target)) {
+            moreMenu.classList.add('hidden');
+        }
+    });
+
+    // 下载功能
+    downloadBtn.addEventListener('click', async () => {
+        if (audio.src) {
+            try {
+                const songName = songTitle.textContent || 'unknown';
+                const artistName = artist.textContent || 'unknown';
+                const fileName = `${songName}-${artistName}.mp3`;
+                
+                // 创建下载提示
+                const toast = document.createElement('div');
+                toast.className = 'toast-message';
+                toast.textContent = '准备下载...';
+                document.body.appendChild(toast);
+
+                // 获取音乐文件
+                const response = await fetch(audio.src);
+                if (!response.ok) throw new Error('下载失败');
+                
+                // 转换为 blob
+                const blob = await response.blob();
+                
+                // 创建下载链接
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                
+                // 更新提示
+                toast.textContent = '开始下载...';
+                
+                // 开始下载
+                document.body.appendChild(a);
+                a.click();
+                
+                // 清理
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                
+                // 显示成功提示
+                setTimeout(() => {
+                    toast.textContent = '下载完成！';
+                    setTimeout(() => {
+                        document.body.removeChild(toast);
+                    }, 2000);
+                }, 1000);
+                
+            } catch (error) {
+                console.error('下载失败:', error);
+                
+                // 显示错误提示
+                const errorToast = document.createElement('div');
+                errorToast.className = 'toast-message error';
+                errorToast.textContent = '下载失败，请重试';
+                document.body.appendChild(errorToast);
+                
+                setTimeout(() => {
+                    document.body.removeChild(errorToast);
+                }, 3000);
+            }
+        }
+    });
+
+    // 防止菜单内部点击关闭菜单
+    moreMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
+    // 播放速度控制
+    speedSelect.addEventListener('change', (e) => {
+        const newSpeed = parseFloat(e.target.value);
+        audio.playbackRate = newSpeed;
+    });
+
+    // 添加音质切换事件监听
+    qualitySelect.addEventListener('change', () => {
+        // 如果当前正在播放音乐，则重新加载当前音乐
+        if (currentSongIndex) {
+            // 创建切换提示
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.textContent = '切换音质中...';
+            document.body.appendChild(toast);
+            
+            // 记住当前播放位置
+            const currentTime = audio.currentTime;
+            
+            // 重新加载当前歌曲
+            playMusic(currentSongIndex).then(() => {
+                // 恢复播放位置
+                audio.currentTime = currentTime;
+                
+                // 更新提示
+                toast.textContent = '音质切换成功';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 2000);
+            }).catch(() => {
+                toast.textContent = '音质切换失败';
+                toast.className = 'toast-message error';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 2000);
+            });
+        }
+    });
 });
