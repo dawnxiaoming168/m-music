@@ -1,11 +1,4 @@
-<!--
- * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @Date: 2024-12-07 15:55:35
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2024-12-10 22:15:15
- * @FilePath: \cursor\index.html
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
+
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -26,7 +19,7 @@
         </div>
 
         <div class="player hidden" id="player">
-            <img src="https://via.placeholder.com/120" alt="封面" class="cover" id="cover">
+            <img src="#" alt="封面" class="cover" id="cover">
             <div class="player-info">
                 <div class="song-info">
                     <h2 id="songTitle">歌曲名称</h2>
@@ -38,15 +31,6 @@
                         <button id="playBtn" class="control-btn play-btn">▶️</button>
                         <button id="nextBtn" class="control-btn">⏭️</button>
                     </div>
-                    <div class="control-settings">
-                        <div class="volume-control">
-                            <button id="muteBtn" class="control-btn volume-btn">🔊</button>
-                            <div class="volume-slider-container">
-                                <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="100">
-                            </div>
-                        </div>
-                        <button id="speedBtn" class="speed-btn">1.00x</button>
-                    </div>
                 </div>
                 <div class="progress-container">
                     <span class="time current-time">00:00</span>
@@ -54,6 +38,47 @@
                         <div class="progress-bar" id="progressBar"></div>
                     </div>
                     <span class="time total-time">00:00</span>
+                    <div class="more-options">
+                        <button id="moreBtn" class="more-btn">⋮</button>
+                        <div class="more-menu hidden">
+                            <div class="menu-item">
+                                <span>音量</span>
+                                <div class="volume-control">
+                                    <button id="muteBtn" class="control-btn volume-btn">🔊</button>
+                                    <div class="volume-slider-container">
+                                        <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <span>播放速度</span>
+                                <select id="speedSelect" class="speed-select">
+                                    <option value="0.5">0.50x</option>
+                                    <option value="0.75">0.75x</option>
+                                    <option value="1.0" selected>1.00x</option>
+                                    <option value="1.25">1.25x</option>
+                                    <option value="1.5">1.50x</option>
+                                    <option value="2.0">2.00x</option>
+                                </select>
+                            </div>
+                            <div class="menu-item">
+                                <span>下载</span>
+                                <button id="downloadBtn" class="download-btn">⬇️</button>
+                            </div>
+                            <div class="menu-item">
+                                <span>音质选择</span>
+                                <select id="qualitySelect" class="quality-select">
+                                    <option value="1">标准音质</option>
+                                    <option value="2" selected>极高音质</option>
+                                    <option value="3">无损音质</option>
+                                    <option value="4">Hi-Res音质</option>
+                                    <option value="5">高清环绕声</option>
+                                    <option value="6">沉浸环绕声</option>
+                                    <option value="7">超清母带</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
