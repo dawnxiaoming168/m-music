@@ -45,7 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
     async function searchMusic(keyword) {
         try {
             currentKeyword = keyword;
-            const response = await fetch(`https://www.hhlqilongzhu.cn/api/dg_wyymusic.php?gm=${encodeURIComponent(keyword)}&num=60`);
+            // ✅ 修改接口地址为指定HTTPS链接
+            const response = await fetch(`https://sdkapi.hhlqilongzhu.cn/api/dgMusic_wyy/?key=DragonD95D21C5969B038916247BF22B4641CA&gm=${encodeURIComponent(keyword)}&num=60`);
             const text = await response.text();
             
             // 处理搜索结果
@@ -87,7 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // 获取当前选择的音质
             const quality = qualitySelect.value;
             
-            const response = await fetch(`https://www.hhlqilongzhu.cn/api/dg_wyymusic.php?gm=${encodeURIComponent(currentKeyword)}&n=${index}&type=json&num=60&br=${quality}`);
+            // ✅ 修改接口地址为指定HTTPS链接
+            const response = await fetch(`https://sdkapi.hhlqilongzhu.cn/api/dgMusic_wyy/?key=DragonD95D21C5969B038916247BF22B4641CA&gm=${encodeURIComponent(currentKeyword)}&n=${index}&type=json&num=60&br=${quality}`);
             const data = await response.json();
 
             if (data.code === 200) {
